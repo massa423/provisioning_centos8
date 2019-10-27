@@ -1,0 +1,24 @@
+- name: update all packages
+  dnf:
+    name: "*"
+    state: latest
+
+- name: mask firewalld
+  systemd:
+    name: firewalld
+    state: stopped
+    masked: yes
+
+- name: enable and start nftables
+  systemd:
+    name: nftables
+    state: started
+    enabled: yes
+
+- name: copy .vimrc
+  copy:
+    src: home/vagrant/.vimrc
+    dest: /home/vagrant/.vimrc
+    owner: vagrant
+    group: vagrant
+    mode: '0644'
